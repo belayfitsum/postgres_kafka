@@ -23,18 +23,18 @@ DB_NAME=<DB_NAME>
 
  To verify:
 
- 1. list all Db
+ 1. list all Db <br>
     \l
-2. list all tables
+2. list all tables <br>
     \dt
-    pgtestDb=> \dt
-         List of relations
+    pgtestDb=> \dt <br>
+         List of relations <br>
  Schema | Name  | Type  |  Owner   
 --------+-------+-------+----------
  public | test5 | table | avnadmin
 (1 row)
 
-pgtestDb=>  SELECT * FROM test5;
+pgtestDb=>  SELECT * FROM test5; <br>
  id | name  |       email       
 ----+-------+-------------------
  88 | test2 | test2@example.com
