@@ -15,6 +15,36 @@ DB_USER=<USER_NAME>
 DB_PASSWORD=<PASSWORD>
 DB_NAME=<DB_NAME>
 
+# Database Setup and Testing
+
+ I used the psql command-line interface (CLI)
+
+ psql -h <psql_endpoint> 
+
+ To verify:
+
+ 1. list all Db
+    \l
+2. list all tables
+    \dt
+    pgtestDb=> \dt
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | test5 | table | avnadmin
+(1 row)
+
+pgtestDb=>  SELECT * FROM test5;
+ id | name  |       email       
+----+-------+-------------------
+ 88 | test2 | test2@example.com
+ 89 | test3 | test3@example.com
+ 90 | test4 | test4@example.com
+ 87 | test1 | test1@example.com
+(4 rows)
+
+    
+
 # Connection to PostgreSQL service:
 The <db.js> script in /main makes the connection to ps using the pg library. The dotenv manages the environment variables defined in .env file to not hardcode senititve information. 
 
