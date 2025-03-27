@@ -9,11 +9,11 @@ Pull the code in local system and create .env to hold db related values
 
 .env file looks like :
 
-DB_HOST=<pg-URL>
-DB_PORT=21421
-DB_USER=<USER_NAME>
-DB_PASSWORD=<PASSWORD>
-DB_NAME=<DB_NAME>
+DB_HOST=<pg-URL> <br>
+DB_PORT=21421 <br>
+DB_USER=<USER_NAME> <br>
+DB_PASSWORD=<PASSWORD> <br>
+DB_NAME=<DB_NAME> <br>
 
 # Database Setup and Testing
 
@@ -28,24 +28,11 @@ DB_NAME=<DB_NAME>
 2. list all tables <br>
     \dt
     pgtestDb=> \dt <br>
-         List of relations <br>
- Schema | Name  | Type  |  Owner   
---------+-------+-------+----------
- public | test5 | table | avnadmin
-(1 row)
 
-pgtestDb=>  SELECT * FROM test5; <br>
- id | name  |       email       
-----+-------+-------------------
- 88 | test2 | test2@example.com
- 89 | test3 | test3@example.com
- 90 | test4 | test4@example.com
- 87 | test1 | test1@example.com
-(4 rows)
+## Below are answers to questions 
 
-    
 
-# Connection to PostgreSQL service:
+# Q2 Connection to PostgreSQL service:
 The <db.js> script in /main makes the connection to ps using the pg library. The dotenv manages the environment variables defined in .env file to not hardcode senititve information. 
 
 .env is in the gitignore file, so you won't see it in the repository. I make use of a separate database named pgtestDb instead of the defaultdb
