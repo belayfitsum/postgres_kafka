@@ -56,7 +56,6 @@ DB_NAME=<DB_NAME> <br>
 
 pgtestDb=>  SELECT * FROM test5;<br>
  id | name  |       email       <br>
-----+-------+-------------------
  88 | test2 | test2@example.com<br>
  89 | test3 | test3@example.com<br>
  90 | test4 | test4@example.com<br>
