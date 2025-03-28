@@ -54,13 +54,13 @@ DB_NAME=<DB_NAME> <br>
  public | test5 | table | avnadmin
 (1 row)
 
-pgtestDb=>  SELECT * FROM test5;
- id | name  |       email       
+pgtestDb=>  SELECT * FROM test5;<br>
+ id | name  |       email       <br>
 ----+-------+-------------------
- 88 | test2 | test2@example.com
- 89 | test3 | test3@example.com
- 90 | test4 | test4@example.com
- 87 | test1 | test1@example.com
+ 88 | test2 | test2@example.com<br>
+ 89 | test3 | test3@example.com<br>
+ 90 | test4 | test4@example.com<br>
+ 87 | test1 | test1@example.com<br>
 (4 rows)
 
 
