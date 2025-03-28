@@ -1,5 +1,5 @@
 # postgres_kafka
-This project demonstrates how to integrate Kafka with a PostgreSQL database, using Producer and Consumer components. The Producer sends data to a Kafka topic, while the Consumer listens for incoming messages from the Kafka topic . It also creates a table in the database and adds entry to it.
+This project demonstrates how to make connection to remote PostgreSQL database using Javascript, insert data into the db. In addition  using Producer and Consumer custom components. The Producer sends data to a Kafka topic, while the Consumer listens for incoming messages from the Kafka topic . It also creates a table in the database and adds entry to it.
 
 Answers :
 
@@ -72,6 +72,17 @@ Producer Connection:
 
     Sends messages to a specified topic- <my_topic>
 
+    ## Output from the script 
+
+    $node producer.js <br>
+    string<br>
+    db connected<br>
+    Sent message: {"id":88,"name":"test2","email":"test2@example.com"}<br>
+    Sent message: {"id":89,"name":"test3","email":"test3@example.com"}<br>
+    Sent message: {"id":90,"name":"test4","email":"test4@example.com"}<br>
+    Sent message: {"id":87,"name":"test1","email":"test1@example.com"}<br>
+
+
 # Inserting into table
 
 The <insert.js> file in /main inserts entries to tables
@@ -79,6 +90,18 @@ The <insert.js> file in /main inserts entries to tables
 # Read from Kafka
 
 The <consumer.js> file in /main connects to the same broker and subscribes to the topic <my_topic>
+
+## Output from the sript 
+
+$node consumer.js
+string
+my_topic
+db connected
+Received message: {"id":88,"name":"test2","email":"test2@example.com"}<br>
+Received message: {"id":89,"name":"test3","email":"test3@example.com"}<br>
+Received message: {"id":90,"name":"test4","email":"test4@example.com"}<br>
+Received message: {"id":87,"name":"test1","email":"test1@example.com"}<br>
+
 
 Listens for messages and processes them in real-time.
 
