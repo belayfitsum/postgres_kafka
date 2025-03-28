@@ -1,7 +1,15 @@
 # postgres_kafka
-This project demonstrates how to make connection to remote PostgreSQL database using Javascript, insert data into the db. In addition  using Producer and Consumer custom components. The Producer sends data to a Kafka topic, while the Consumer listens for incoming messages from the Kafka topic . It also creates a table in the database and adds entry to it.
 
-Answers :
+This project is built using JavaScript with Node.js as the runtime environment. It integrates PostgreSQL as the database and Apache Kafka for message streaming. The system consists of multiple components that work together to read from the database, publish messages to a Kafka topic, and consume them efficiently.
+
+
+# Environment/tools
+
+1. Backend language : Javascript <br>
+
+2. Runtime environment :Nodejs <br>
+
+2. Version control : github <br>
 
 # Prerequisites:
 
@@ -15,16 +23,15 @@ DB_USER=<USER_NAME> <br>
 DB_PASSWORD=<PASSWORD> <br>
 DB_NAME=<DB_NAME> <br>
 
-# Main scripts<>
+# Components
 
-    1. <db.js> - connection to database <br>
+    1. db.js - Establishes a connection to the PostgreSQL database using the pg module. <br>
 
-    2. <inser.js> - inserts entry to the database <br>
+    2. inser.js - Inserts data into the PostgreSQL database. <br>
 
-    3. <producer.js> - connects to kafka, reads data from a table , and then sends that data to a Kafka topic
+    3. producer.js - Reads data from the database and publishes it to a Kafka topic.<br>
 
-    4. <consumer.js> - connect to same kafka broker and reads messages 
-
+    4. <consumer.js> -  Listens to the Kafka topic and processes incoming messages.
 
 # Database Setup and Testing
 
@@ -40,11 +47,21 @@ DB_NAME=<DB_NAME> <br>
     \dt<br>
     pgtestDb=> \dt <br>
 
-## Environment/tools
+    pgtestDb=> \dt
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | test5 | table | avnadmin
+(1 row)
 
-1. Backend language : Javascript <br>
-
-2. Version control : github <br>
+pgtestDb=>  SELECT * FROM test5;
+ id | name  |       email       
+----+-------+-------------------
+ 88 | test2 | test2@example.com
+ 89 | test3 | test3@example.com
+ 90 | test4 | test4@example.com
+ 87 | test1 | test1@example.com
+(4 rows)
 
 
 ## Below are answers to questions 
@@ -59,7 +76,7 @@ How to run :
 
 node db.js or nodemon db
 
-# Connection to Kafka and extracting changes in PostgreSQL
+# Q3 Connection to Kafka and extracting changes in PostgreSQL
 
 
 The project connects to Kafka using the node-rdkafka library.
@@ -83,13 +100,13 @@ Producer Connection:
     Sent message: {"id":87,"name":"test1","email":"test1@example.com"}<br>
 
 
-# Inserting into table
+# Q4 Inserting into table
 
-The <insert.js> file in /main inserts entries to tables
+The <insert.js> script inserts entries to tables
 
 # Read from Kafka
 
-The <consumer.js> file in /main connects to the same broker and subscribes to the topic <my_topic>
+The <consumer.js> script connects to the same broker and subscribes to the topic <my_topic>
 
 ## Output from the sript 
 
