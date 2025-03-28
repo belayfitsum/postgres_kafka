@@ -37,7 +37,7 @@ DB_NAME=<DB_NAME> <br>
  1. list all Db <br>
     \l
 2. list all tables <br>
-    \dt
+    \dt<br>
     pgtestDb=> \dt <br>
 
 ## Environment/tools
