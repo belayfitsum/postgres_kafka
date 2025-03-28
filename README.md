@@ -15,6 +15,17 @@ DB_USER=<USER_NAME> <br>
 DB_PASSWORD=<PASSWORD> <br>
 DB_NAME=<DB_NAME> <br>
 
+# Main scripts<>
+
+    1. <db.js> - connection to database <br>
+
+    2. <inser.js> - inserts entry to the database <br>
+
+    3. <producer.js> - connects to kafka, reads data from a table , and then sends that data to a Kafka topic
+
+    4. <consumer.js> - connect to same kafka broker and reads messages 
+
+
 # Database Setup and Testing
 
  I used the psql command-line interface (CLI)
@@ -28,6 +39,13 @@ DB_NAME=<DB_NAME> <br>
 2. list all tables <br>
     \dt
     pgtestDb=> \dt <br>
+
+## Environment/tools
+
+1. Backend language : Javascript <br>
+
+2. Version control : github <br>
+
 
 ## Below are answers to questions 
 

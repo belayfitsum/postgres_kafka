@@ -1,13 +1,13 @@
 const { Client } =require('pg')
 const dotenv = require('dotenv')
-const express = require('express')
-const app = express()
+// const express = require('express')
+// const app = express()
 const fs = require('fs')
 
 
 dotenv.config()
 
-app.use(express.json())
+// app.use(express.json())
 
 //define a route that listens to requests by making this app a server to get to listen to connections
 const port = process.env.DB_PORT;
@@ -21,7 +21,7 @@ const con = new Client({
     url: process.env.DB_URL,
     ssl: {
         rejectUnauthorized: false,
-        ca: `fs.readFileSync(process.env.ca.pem).toString`
+        ca: `fs.readFileSync('./ca.pem').toString()`
     },
 });
 
