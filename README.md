@@ -27,7 +27,7 @@ DB_NAME=<DB_NAME> <br>
 
     1. db.js - Establishes a connection to the PostgreSQL database using the pg module. <br>
 
-    2. inser.js - Inserts data into the PostgreSQL database. <br>
+    2. inser.js - Inserts data into the PostgreSQL database table and creates table if table doe not exist . <br>
 
     3. producer.js - Reads data from the database and publishes it to a Kafka topic.<br>
 
