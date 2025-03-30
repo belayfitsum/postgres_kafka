@@ -10,7 +10,7 @@ const producer = new Kafka.Producer({
   "security.protocol": "ssl",
   "ssl.key.location": "serviceK.key",
   "ssl.certificate.location": "service.cert",
-  "ssl.ca.location": "caK.pem",
+  "ssl.ca.location": process.env.KAFKA_CA,
   dr_cb: true,
 });
 

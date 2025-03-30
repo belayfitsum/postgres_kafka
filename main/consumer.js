@@ -13,7 +13,7 @@ const stream = new Kafka.createReadStream(
     "security.protocol": "ssl",
     "ssl.key.location": "serviceK.key",
     "ssl.certificate.location": "service.cert",
-    "ssl.ca.location": "caK.pem", 
+    "ssl.ca.location": "certs/caK.pem", 
     "debug": "security,broker,protocol",
   },
   { "auto.offset.reset": "latest" },
