@@ -13,7 +13,9 @@ This project is built using JavaScript with Node.js as the runtime environment. 
 
 # Prerequisites:
 
-Pull the code in local system and create .env to hold db related values
+Pull the code in local system and create .env to hold db related values<br>
+
+Also create /certs folder to hold SSL and key values and add both to gitignore file.
 
 .env file looks like :
 
@@ -22,6 +24,8 @@ DB_PORT=21421 <br>
 DB_USER=<USER_NAME> <br>
 DB_PASSWORD=<PASSWORD> <br>
 DB_NAME=<DB_NAME> <br>
+DB_SSL=certs/ca.pem<br>
+KAFKA_SSL=certs/caK.pem<br>
 
 # Components
 
