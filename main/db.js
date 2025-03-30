@@ -19,8 +19,8 @@ const con = new Client({
     database: process.env.DB_NAME,
     url: process.env.DB_URL,
     ssl: {
-        rejectUnauthorized: false,
-        ca: fs.readFileSync('./ca.pem').toString()
+        rejectUnauthorized: true,
+        ca: fs.readFileSync(process.env.DB_SSL).toString(),
     }
 });
 
