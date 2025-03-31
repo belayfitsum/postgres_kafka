@@ -42,13 +42,13 @@ const producer = new Kafka.Producer({
   const sendToKafka = async () => {
     const rows = await fetchDataFromTable();
     rows.forEach((row) => {
-      const message = JSON.stringify(row);  // Convert row to string (JSON format)
+      const message = JSON.stringify(row);  
       producer.produce(
         "my_topic",
         null,  // Use default partitioning
         Buffer.from(message),
-        null,  // Optional key (could be null)
-        Date.now()  // Optional timestamp
+        null, 
+        Date.now()  
       );
       console.log('Sent message:', message);
     });
