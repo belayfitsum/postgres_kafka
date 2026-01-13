@@ -13,19 +13,6 @@ const producer = new Kafka.Producer({
   "ssl.ca.location": process.env.KAFKA_CA,
   dr_cb: true,
 });
-
-// PostgreSQL connection setup
-// const client = new Client({
-//     host: process.env.DB_HOST,
-//     port: process.env.DB_PORT,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_NAME,
-//     ssl: {
-//         rejectUnauthorized: false, 
-//       },
-//     });
-  // Query data from `test5` table
   const fetchDataFromTable = async () => {
     try {
       await client.connect();
@@ -60,47 +47,3 @@ const producer = new Kafka.Producer({
   producer.connect({}, () => {
     sendToKafka();
   });
-
-// producer.connect();
-
-// const sleep = async (timeInMs) =>
-//   await new Promise((resolve) => setTimeout(resolve, timeInMs));
-
-// const produceMessagesOnSecondIntervals = async () => {
-//   // produce 100 messages on 1 second intervals
-//   let i = 0;
-//   while (i < 100) {
-//     try {
-//       if (!producer.isConnected()) {
-//         await sleep(1000);
-//         continue;
-//       }
-
-//       const message = `Hello from Node using SSL ${++i}!`;
-//       producer.produce(
-//         // Topic to send the message to
-//         TOPIC_NAME,
-//         // optionally we can manually specify a partition for the message
-//         // this defaults to -1 - which will use librdkafka's default partitioner (consistent random for keyed messages, random for unkeyed messages)
-//         null,
-//         // Message to send. Must be a buffer
-//         Buffer.from(message),
-//         // for keyed messages, we also specify the key - note that this field is optional
-//         null,
-//         // you can send a timestamp here. If your broker version supports it,
-//         // it will get added. Otherwise, we default to 0
-//         Date.now()
-//       );
-//       console.log(`Message sent: ${message}`);
-//     } catch (err) {
-//       console.error("A problem occurred when sending our message");
-//       console.error(err);
-//     }
-
-//     await sleep(1000);
-//   }
-
-//   producer.disconnect();
-// };
-
-// produceMessagesOnSecondIntervals();

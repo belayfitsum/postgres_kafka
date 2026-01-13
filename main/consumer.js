@@ -1,5 +1,5 @@
 const Kafka = require("node-rdkafka");
-// const con = require("./db") // no need for db connection, producer is connected and sending messages to topics
+// const con = require("./db") no need for db connection, producer is connected and sending messages to topics
 
 const TOPIC_NAME = "my_topic";
 console.log(typeof(TOPIC_NAME))
