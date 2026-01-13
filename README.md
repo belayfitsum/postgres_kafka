@@ -1,127 +1,170 @@
 # postgres_kafka
 
-This project is built using JavaScript with Node.js as the runtime environment. It integrates PostgreSQL as the database and Apache Kafka for message streaming. The system consists of multiple components that work together to read from the database, publish messages to a Kafka topic, and consume them efficiently.
+This project is built using JavaScript with Node.js as the runtime environment. It integrates PostgreSQL as the database and Apache Kafka for message streaming. The system demonstrates a data pipeline where existing database records are read in batch, published to a Kafka topic, and consumed for processing.
 
 
-# Environment/tools
+# Environment/Tools
 
-1. Backend language : Javascript <br>
+1. Backend language: JavaScript
+2. Runtime environment: Node.js
+3. Version control: GitHub
+4. Database: PostgreSQL
+5. Message broker: Apache Kafka (Cloud-hosted)
 
-2. Runtime environment :Nodejs <br>
+# Prerequisites
 
-2. Version control : github <br>
+1. Clone the repository to your local system
+2. Create `.env` file to store database and Kafka configuration
+3. Create `/certs` folder for SSL certificates and keys
+4. Add both `.env` and `/certs` to `.gitignore` file
 
-# Prerequisites:
+## .env Configuration
 
-Pull the code in local system and create .env to hold db related values<br>
-
-Also create /certs folder to hold SSL and key values and add both to gitignore file.
-
-.env file looks like :
-
-DB_HOST=<pg-URL> <br>
-DB_PORT=21421 <br>
-DB_USER=<USER_NAME> <br>
-DB_PASSWORD=<PASSWORD> <br>
-DB_NAME=<DB_NAME> <br>
-DB_SSL=certs/ca.pem<br>
-KAFKA_SSL=certs/caK.pem<br>
+```
+DB_HOST=<postgresql-host>
+DB_PORT=<db-port>
+DB_USER=<username>
+DB_PASSWORD=<password>
+DB_NAME=<database-name>
+DB_SSL=certs/ca.pem
+KAFKA_CA=certs/kafka-ca.pem
+KAFKA_BROKER=<kafka-broker-endpoint>
+```
 
 # Components
 
-    1. db.js - Establishes a connection to the PostgreSQL database using the pg module. <br>
-
-    2. inser.js - Inserts data into the PostgreSQL database table and creates table if table doe not exist . <br>
-
-    3. producer.js - Reads data from the database and publishes it to a Kafka topic.<br>
-
-    4. <consumer.js> -  Listens to the Kafka topic and processes incoming messages.
+1. **db.js** - Establishes a connection to the PostgreSQL database using the `pg` module
+2. **insert.js** - Inserts data into PostgreSQL database tables and creates tables if they don't exist
+3. **producer.js** - Reads all existing data from the database and publishes it to a Kafka topic
+4. **consumer.js** - Subscribes to the Kafka topic and processes incoming messages in real-time
 
 # Database Setup and Testing
 
- I used the psql command-line interface (CLI)
+Using the psql command-line interface (CLI):
 
- psql -h <psql_endpoint> 
+```bash
+psql -h <postgresql-host> -p <port> -U <username> -d <database>
+```
 
- To verify:
+## Verification Commands
 
- 1. list all Db <br>
-    \l
-2. list all tables <br>
-    \dt<br>
-    pgtestDb=> \dt <br>
+1. List all databases:
+   ```sql
+   \l
+   ```
 
-    pgtestDb=> \dt
+2. List all tables:
+   ```sql
+   \dt
+   ```
+
+## Sample Database Content
+
+```sql
+myDatabase=> \dt
          List of relations
  Schema | Name  | Type  |  Owner   
 --------+-------+-------+----------
- public | test5 | table | avnadmin
+ public | test5 | table | dbadmin
 (1 row)
 
-pgtestDb=>  SELECT * FROM test5;<br>
- id | name  |       email       <br>
- 88 | test2 | test2@example.com<br>
- 89 | test3 | test3@example.com<br>
- 90 | test4 | test4@example.com<br>
- 87 | test1 | test1@example.com<br>
+myDatabase=> SELECT * FROM test5;
+ id | name  |       email       
+----+-------+-------------------
+ 88 | test2 | test2@example.com
+ 89 | test3 | test3@example.com
+ 90 | test4 | test4@example.com
+ 87 | test1 | test1@example.com
 (4 rows)
+```
 
 
-## Below are answers to questions 
+---
+
+# Implementation Details
+
+## PostgreSQL Connection
+
+The `db.js` script establishes connection to PostgreSQL using the `pg` library. Environment variables from `.env` file are managed by `dotenv` to avoid hardcoding sensitive information.
+
+- Uses separate database `myDatabase` instead of `defaultdb`
+- `.env` file is in `.gitignore` for security
+
+**Usage:**
+```bash
+node db.js
+# or
+nodemon db.js
+```
+
+## Kafka Integration
+
+The project connects to Kafka using the `node-rdkafka` library.
+
+### Producer (`producer.js`)
+
+- Connects to Kafka broker using SSL authentication
+- Reads all existing data from PostgreSQL `test5` table
+- Publishes each row as JSON message to `my_topic`
+- Performs **batch processing** (not real-time change detection)
+
+**Usage:**
+```bash
+node producer.js
+```
+
+**Sample Output:**
+```
+string
+db connected
+Sent message: {"id":88,"name":"test2","email":"test2@example.com"}
+Sent message: {"id":89,"name":"test3","email":"test3@example.com"}
+Sent message: {"id":90,"name":"test4","email":"test4@example.com"}
+Sent message: {"id":87,"name":"test1","email":"test1@example.com"}
+```
 
 
-# Q2 Connection to PostgreSQL service:
-The <db.js> script in /main makes the connection to ps using the pg library. The dotenv manages the environment variables defined in .env file to not hardcode senititve information. 
+## Data Insertion
 
-.env is in the gitignore file, so you won't see it in the repository. I make use of a separate database named pgtestDb instead of the defaultdb
+The `insert.js` script handles:
+- Inserting new entries into PostgreSQL tables
+- Creating tables if they don't exist
+- Managing database schema
 
-How to run :
+**Usage:**
+```bash
+node insert.js
+```
 
-node db.js or nodemon db
+## Kafka Consumer
 
-# Q3 Connection to Kafka and extracting changes in PostgreSQL
+The `consumer.js` script:
+- Connects to the same Kafka broker
+- Subscribes to `my_topic` using consumer group `GROUP_ID`
+- Processes incoming messages in real-time
+- Uses SSL authentication for secure connection
 
+**Usage:**
+```bash
+node consumer.js
+```
 
-The project connects to Kafka using the node-rdkafka library.
-
-Producer Connection:
-
-    <producer.js> Connects to the Kafka broker using SSL authentication.
-
-    Producer connects to PostgreSQL by importing the db connection and reusing it, reads data from a table <table5>, and then sends that data to a Kafka topic
-
-    Sends messages to a specified topic- <my_topic>
-
-    ## Output from the script 
-
-    $node producer.js <br>
-    string<br>
-    db connected<br>
-    Sent message: {"id":88,"name":"test2","email":"test2@example.com"}<br>
-    Sent message: {"id":89,"name":"test3","email":"test3@example.com"}<br>
-    Sent message: {"id":90,"name":"test4","email":"test4@example.com"}<br>
-    Sent message: {"id":87,"name":"test1","email":"test1@example.com"}<br>
-
-
-# Q4 Inserting into table
-
-The <insert.js> script inserts entries to tables
-
-# Read from Kafka
-
-The <consumer.js> script connects to the same broker and subscribes to the topic <my_topic>
-
-## Output from the sript 
-
-$node consumer.js
+**Sample Output:**
+```
 string
 my_topic
 db connected
-Received message: {"id":88,"name":"test2","email":"test2@example.com"}<br>
-Received message: {"id":89,"name":"test3","email":"test3@example.com"}<br>
-Received message: {"id":90,"name":"test4","email":"test4@example.com"}<br>
-Received message: {"id":87,"name":"test1","email":"test1@example.com"}<br>
+Received message: {"id":88,"name":"test2","email":"test2@example.com"}
+Received message: {"id":89,"name":"test3","email":"test3@example.com"}
+Received message: {"id":90,"name":"test4","email":"test4@example.com"}
+Received message: {"id":87,"name":"test1","email":"test1@example.com"}
+```
 
+## Architecture Flow
 
-Listens for messages and processes them in real-time.
+```
+PostgreSQL (test5 table) → producer.js → Kafka (my_topic) → consumer.js
+```
+
+**Note:** This implementation performs batch data transfer, not real-time change data capture (CDC).
 
